@@ -1,0 +1,21 @@
+Student Name: Willis Allstead
+Program Name: Rent-A-Vehicle
+Program Purpose: Take input file from user and parse through it using several
+different functions.
+
+This project #imports the <iostream>, <iomanip>, and <fstream> libraries.
+There is a constant int named CAR_COUNT which is set equal to 10, because the
+project description specifies that a file with 10 cars will be supplied in every
+case. A struct named rentalCar is then defined to have several properties.
+rentalCar has a char array of size 20 named make. This will hold the make of the
+a car. Similarly, the struct has a char array of size 20 named model. It also
+has an int variable named year, a float to hold the price, and a bool to hold
+the car's availability. Below this struct are the prototypes of the 4 functions
+used, besides the main. In the main function, an int variable named selection is
+set to 0. This will hold the user's selection. There is then a do-while loop for
+the menu. As long as the selection is not 6 (the exit selection), the program
+will re-print the menu once the selected function is finished running. Inside of
+the "do" brackets the menu title is printed to the screen, with some styling.
+Then, the 6 options are printed to the screen. Next, the user is prompted to
+input their selection. After that, there is an array of 10 rentalCars created.
+This will hold the information porvided by the file.
