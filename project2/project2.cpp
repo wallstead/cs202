@@ -13,6 +13,7 @@ struct rentalCar {
   bool available;
 };
 
+void select(int &selection);
 void readFile(rentalCar cars[]);
 void printCars(bool availableOnly, rentalCar cars[]);
 void estimatePrice(rentalCar cars[]);
@@ -37,9 +38,7 @@ main() {
     cout << setfill('-') << setw(80) << "-" << endl;
 
     /* Get Menu Selection */
-    cout << "Selection: ";
-    cin >> selection; // get user input and save it to selection variable
-    cout << setfill('-') << setw(80) << "-" << endl;
+    select(selection);
 
     rentalCar cars[CAR_COUNT]; // create array of cars
 
@@ -69,6 +68,12 @@ main() {
   } while (selection != 6); // continue loop as long as user did not choose to exit
 
   return 0;
+}
+
+void select(int &selection) {
+  cout << "Selection: ";
+  cin >> selection; // get user input and save it to selection variable
+  cout << setfill('-') << setw(80) << "-" << endl;
 }
 
 void readFile(rentalCar cars[]) {
