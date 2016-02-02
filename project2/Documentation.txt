@@ -1,6 +1,6 @@
 Student Name: Willis Allstead
 Program Name: Rent-A-Vehicle
-Program Purpose: Take input file from user and parse through it using several
+Program Purpose: Take input file from user and parse it using several
 different functions.
 
 This project #imports the <iostream>, <iomanip>, and <fstream> libraries.
@@ -53,4 +53,4 @@ mostExpensive function simplly initializes an index variable named
 mostExpensiveIndex to 0, then iterates through each car in the cars array using
 a for loop. If the price of this car is greater than the car before it, the
 mostExpensiveIndex is set to the index of this car. Then the most expensive
-car's data is printed to the screen. 
+car's data is printed to the screen.
