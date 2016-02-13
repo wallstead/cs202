@@ -8,7 +8,24 @@ struct Pieces {
     int jump;
 };
 
+void readFile(Pieces *&pieceptr, int *&keyptr);
+
 int main() {
+    Pieces *pieceptr; // Points to first piece in piece array.
+    int *keyptr; // Points to first key in key array.
+
+
+    readFile(pieceptr, keyptr); // pass these Pointers to readFile function
+
+    cout << (*keyptr) << endl;
+
+
+    return 0;
+}
+
+void readFile(Pieces *&pieceptr, int *&keyptr) {
+
+
     ifstream fin;
     fin.open("data");
     int keyCount, pieceCount;
@@ -16,12 +33,13 @@ int main() {
         cout << "opened" << endl;
         fin >> pieceCount >> keyCount;
     }
+    fin.close();
 
-    int *keyptr = new int[ikeyCount]; // Keys
-    *keyptr = 10;
-    cout << *keyptr << endl;
+    pieceptr = new Pieces[pieceCount]; // Pieces
+    keyptr = new int[keyCount]; // Keys
+    (*pieceptr).word = new char[5]; // Allocate mem for a word
+    (*pieceptr).jump = 1;
+    (*keyptr) = 5;
 
-
-
-    return 0;
+    cout << (*keyptr) << endl;
 }
