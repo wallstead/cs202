@@ -9,16 +9,20 @@ struct Pieces {
 };
 
 void readFile(Pieces *&pieceptr, int *&keyptr);
+void decodeMessage(Pieces *pieceptr, int *keyptr);
 int stringLength(char *str);
 void stringCopy(char *str1, char *str2);
 
 int main() {
     Pieces *pieceptr; // Points to first piece in piece array.
     int *keyptr; // Points to first key in key array.
+    char *decoded; // Decoded message
+
 
 
     readFile(pieceptr, keyptr); // pass these Pointers to readFile function
 
+    decodeMessage(pieceptr, keyptr);
     // cout << (*keyptr) << endl;
 
 
@@ -33,33 +37,35 @@ void readFile(Pieces *&pieceptr, int *&keyptr) {
     ifstream fin;
     fin.open(ifileName);
     int keyCount, pieceCount;
-    if(fin.is_open()) {
-        cout << "opened" << endl;
+    if(fin.good()) {
+        cout << "Opened File Successfully" << endl;
         fin >> pieceCount >> keyCount;
 
         pieceptr = new Pieces[pieceCount]; // Pieces
+        Pieces *pieceCopy = pieceptr;
         keyptr = new int[keyCount]; // Keys
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < pieceCount; i++) {
             char *tempWord = new char[20]; // create pointer to first char in char array.
-            fin >> tempWord >> (*pieceptr).jump; // Because tempWord actually returns the string it points to, not the address of the pointer
-            (*pieceptr).word = new char[stringLength(tempWord)]; // Create exact amount of memory needed for word.
-            stringCopy((*pieceptr).word, tempWord);
+            fin >> tempWord >> (*pieceCopy).jump; // Because tempWord actually returns the string it points to, not the address of the pointer
+            (*pieceCopy).word = new char[stringLength(tempWord)]; // Create exact amount of memory needed for word.
+            stringCopy((*pieceCopy).word, tempWord);
             delete []tempWord; // Done with tempWord
             tempWord = NULL;
-            cout << (*pieceptr).word << " " << (*pieceptr).jump << endl;
-            pieceptr++;
-
+            pieceCopy++;
         }
 
-        // (*pieceptr).word = new char[5]; // Allocate mem for a word
-        // (*pieceptr).jump = 1;
-        // (*keyptr) = 5;
-
-    } else {
-        cout << "Error opening file." << endl;
-    }
+        for (int j = 0; j < keyCount; j++) {
+            fin >> *keyptr;
+            keyptr++;
+        }
+    } else { cout << "Cannot opening file." << endl; }
     fin.close();
+}
+
+void decodeMessage(Pieces *pieceptr, int *keyptr) {
+    pieceptr++;
+    cout << (*pieceptr).word << endl;
 }
 
 int stringLength(char *str) {
