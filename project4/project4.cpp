@@ -9,8 +9,9 @@ struct Pieces {
 };
 
 void readFile(ifstream *fin, Pieces *pptr, int *kptr, int pieceCount, int keyCount);
-void decrypt(Pieces *pptr, int *kptr, int pieceCount, int keyCount);
+void decrypt(char *decrypted, Pieces *pptr, int *kptr, int pieceCount, int keyCount);
 int stringLength(char *str);
+void strConcat(char *str1, char *str2);
 void stringCopy(char *str1, char *str2);
 
 int main() {
@@ -25,7 +26,7 @@ int main() {
     int pieceCount, keyCount;
 
     if(fin.good()) {
-        cout << "File opened. Decrypting..." << endl;
+        cout << "File opened. Decoding..." << endl;
         /* Get pieceCount and keyCount */
         fin >> pieceCount >> keyCount;
     } else {
@@ -37,13 +38,17 @@ int main() {
     /* Allocate arrays */
     Pieces *pptr = new Pieces[pieceCount];
     int *kptr = new int[keyCount];
+    char *decrypted = new char[100]; // temporarily allocate room for 100 chars
 
     /* Read in data */
     readFile(&fin, pptr, kptr, pieceCount, keyCount);
 
     /* Decrypt data */
-    decrypt(pptr, kptr, pieceCount, keyCount);
+    decrypt(decrypted, pptr, kptr, pieceCount, keyCount);
 
+
+
+    cout << "FINISHED: " << decrypted << endl;
 
     return 0;
 }
@@ -55,7 +60,7 @@ void readFile(ifstream *fin, Pieces *pptr, int *kptr, int pieceCount, int keyCou
     for (int i = 0; i < pieceCount; i++) {
         char *tempWord = new char[20]; // create pointer to first char in char array.
         *fin >> tempWord >> (*pptr).jump; // Because tempWord actually returns the string it points to, not the address of the pointer
-        (*pptr).word = new char[stringLength(tempWord)]; // Create exact amount of memory needed for word.
+        (*pptr).word = new char[stringLength(tempWord)+1]; // Create exact amount of memory needed for word.
         stringCopy((*pptr).word, tempWord);
         delete []tempWord; // Done with tempWord
         tempWord = NULL;
@@ -73,7 +78,7 @@ void readFile(ifstream *fin, Pieces *pptr, int *kptr, int pieceCount, int keyCou
     (*fin).close();
 }
 
-void decrypt(Pieces *pptr, int *kptr, int pieceCount, int keyCount) {
+void decrypt(char *decrypted, Pieces *pptr, int *kptr, int pieceCount, int keyCount) {
     Pieces *pptrHome = pptr;
     int *kptrHome = kptr;
 
@@ -93,14 +98,27 @@ void decrypt(Pieces *pptr, int *kptr, int pieceCount, int keyCount) {
                 pieceIndex = newIndex;
             }
         }
-
-        cout << (*pptr).word << " ";
+        strConcat(decrypted, (*pptr).word);
         kptr++;
         pptr = pptrHome;
     }
-
+    cout << endl;
 }
+void strConcat(char *str1, char *str2) {
+    /* Add str2 to the end of str1 */
 
+    while(*str1 != '\0') {
+        str1++;
+    }
+
+    while(*str2 != '\0') {
+        *str1 = *str2;
+        str1++;
+        str2++;
+    }
+
+    *str1 = ' ';
+}
 
 int stringLength(char *str) {
     int length = 0;
@@ -114,6 +132,7 @@ int stringLength(char *str) {
 void stringCopy(char *str1, char *str2) {
     while (*str2 != '\0') {
          *str1 = *str2;
+
          str1++;
          str2++;
     }
