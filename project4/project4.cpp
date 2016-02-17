@@ -9,6 +9,7 @@ struct Pieces {
 };
 
 void readFile(ifstream *fin, Pieces *pptr, int *kptr, int pieceCount, int keyCount);
+void decrypt(Pieces *pptr, int *kptr, int pieceCount, int keyCount);
 int stringLength(char *str);
 void stringCopy(char *str1, char *str2);
 
@@ -24,14 +25,14 @@ int main() {
     int pieceCount, keyCount;
 
     if(fin.good()) {
-        cout << "File opened." << endl;
+        cout << "File opened. Decrypting..." << endl;
         /* Get pieceCount and keyCount */
         fin >> pieceCount >> keyCount;
     } else {
         cout << "Error opening file." << endl;
     }
 
-    cout << pieceCount << " " << keyCount << endl;
+    // cout << pieceCount << " " << keyCount << endl;
 
     /* Allocate arrays */
     Pieces *pptr = new Pieces[pieceCount];
@@ -40,7 +41,8 @@ int main() {
     /* Read in data */
     readFile(&fin, pptr, kptr, pieceCount, keyCount);
 
-    cout << (*pptr).jump << endl;
+    /* Decrypt data */
+    decrypt(pptr, kptr, pieceCount, keyCount);
 
 
     return 0;
@@ -57,7 +59,7 @@ void readFile(ifstream *fin, Pieces *pptr, int *kptr, int pieceCount, int keyCou
         stringCopy((*pptr).word, tempWord);
         delete []tempWord; // Done with tempWord
         tempWord = NULL;
-        cout << (*pptr).word << endl;
+        // cout << (*pptr).word << endl;
         pptr++;
     }
 
@@ -68,6 +70,35 @@ void readFile(ifstream *fin, Pieces *pptr, int *kptr, int pieceCount, int keyCou
 
     pptr = pptrHome;
     kptr = kptrHome;
+    (*fin).close();
+}
+
+void decrypt(Pieces *pptr, int *kptr, int pieceCount, int keyCount) {
+    Pieces *pptrHome = pptr;
+    int *kptrHome = kptr;
+
+    int pieceIndex; // to keep track of current position
+
+    for (int i = 0; i < keyCount; i++) { //For each key
+        pptr += *kptr;
+        pieceIndex = *kptr;
+        while((*pptr).jump != 0) {
+            if ((pieceIndex + (*pptr).jump) < pieceCount) {
+                pptr += (*pptr).jump;
+                pieceIndex += (*pptr).jump;
+            } else { //wrap
+                int difference = pieceCount - pieceIndex;
+                int newIndex = difference - (*pptr).jump;
+                pptr = pptrHome + newIndex;
+                pieceIndex = newIndex;
+            }
+        }
+
+        cout << (*pptr).word << " ";
+        kptr++;
+        pptr = pptrHome;
+    }
+
 }
 
 
