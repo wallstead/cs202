@@ -8,77 +8,68 @@ struct Pieces {
     int jump;
 };
 
-void readFile(Pieces *pieceptr, int *keyptr, int *pieceCount, int *keyCount);
-void decodeMessage(Pieces *pieceptr, int *keyptr, int *pieceCount, int *keyCount);
+void readFile(ifstream *fin, Pieces *pptr, int *kptr, int pieceCount, int keyCount);
 int stringLength(char *str);
 void stringCopy(char *str1, char *str2);
 
 int main() {
-    Pieces *pieceptr; // Points to first piece in piece array.
-    int *keyptr; // Points to first key in key array.
-    char *decoded; // Decoded message
-    int *pieceCount;
-    int *keyCount;
-    readFile(pieceptr, keyptr, pieceCount, keyCount); // pass these Pointers to readFile function
-
-    cout << (*pieceptr).word << endl;
-
-    decodeMessage(pieceptr, keyptr, pieceCount, keyCount);
-
-
-    return 0;
-}
-
-void readFile(Pieces *pieceptr, int *keyptr, int *pieceCount, int *keyCount) {
-    char ifileName[20];
+    /* Prompt user for file name */
+    char *ifileName = new char[20];
     cout << "Please enter file name: ";
     cin >> ifileName;
 
     ifstream fin;
     fin.open(ifileName);
 
+    int pieceCount, keyCount;
+
     if(fin.good()) {
-        cout << "Opened File Successfully" << endl;
-        /* make enough room for both of these variables. */
-        pieceCount = new int[5];
-        keyCount = new int[5];
+        cout << "File opened." << endl;
+        /* Get pieceCount and keyCount */
+        fin >> pieceCount >> keyCount;
+    } else {
+        cout << "Error opening file." << endl;
+    }
 
-        fin >> *pieceCount >> *keyCount;
+    cout << pieceCount << " " << keyCount << endl;
 
-        cout << *pieceCount << " " << *keyCount;
+    /* Allocate arrays */
+    Pieces *pptr = new Pieces[pieceCount];
+    int *kptr = new int[keyCount];
 
-        pieceptr = new Pieces[*pieceCount]; // Pieces
-        Pieces *pieceCopy = pieceptr;
-        keyptr = new int[*keyCount]; // Keys
-        int *keyCopy = keyptr;
+    /* Read in data */
+    readFile(&fin, pptr, kptr, pieceCount, keyCount);
 
-        for (int i = 0; i < *pieceCount; i++) {
-            char *tempWord = new char[20]; // create pointer to first char in char array.
-            fin >> tempWord >> (*pieceCopy).jump; // Because tempWord actually returns the string it points to, not the address of the pointer
-            (*pieceCopy).word = new char[stringLength(tempWord)]; // Create exact amount of memory needed for word.
-            stringCopy((*pieceCopy).word, tempWord);
-            delete []tempWord; // Done with tempWord
-            tempWord = NULL;
-            cout << (*pieceptr).word << endl;
-            pieceCopy++;
-        }
+    cout << (*pptr).jump << endl;
 
-        for (int j = 0; j < *keyCount; j++) {
-            fin >> *keyCopy;
-            keyCopy++;
-        }
-    } else { cout << "Cannot opening file." << endl; }
-    fin.close();
+
+    return 0;
 }
 
-void decodeMessage(Pieces *pieceptr, int *keyptr, int *pieceCount, int *keyCount) {
-    /* Make copies of both Pointers */
-    Pieces *pieceCopy = pieceptr;
-    int *keyCopy = keyCopy;
-    // cout << (*pieceptr).word << endl;
+void readFile(ifstream *fin, Pieces *pptr, int *kptr, int pieceCount, int keyCount) {
+    Pieces *pptrHome = pptr;
+    int *kptrHome = kptr;
 
+    for (int i = 0; i < pieceCount; i++) {
+        char *tempWord = new char[20]; // create pointer to first char in char array.
+        *fin >> tempWord >> (*pptr).jump; // Because tempWord actually returns the string it points to, not the address of the pointer
+        (*pptr).word = new char[stringLength(tempWord)]; // Create exact amount of memory needed for word.
+        stringCopy((*pptr).word, tempWord);
+        delete []tempWord; // Done with tempWord
+        tempWord = NULL;
+        cout << (*pptr).word << endl;
+        pptr++;
+    }
 
+    for (int j = 0; j < keyCount; j++) {
+        *fin >> *kptr;
+        kptr++;
+    }
+
+    pptr = pptrHome;
+    kptr = kptrHome;
 }
+
 
 int stringLength(char *str) {
     int length = 0;
