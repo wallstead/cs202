@@ -1,5 +1,4 @@
-
-class String{
+class String {
 
 public:
 	void initialize(char *);
