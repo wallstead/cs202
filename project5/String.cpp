@@ -27,6 +27,19 @@ void String::initialize(char *str) {
     buffer = bufferHome;
 }
 
+void String::deallocate() {
+    delete []buffer;
+    buffer = NULL;
+}
+
+void String::copy(const String &str) {
+    if (str.wordLength > wordLength) {
+        cout << "Too big" << endl;
+    } else {
+        cout << "Big enough" << endl;
+    }
+}
+
 int String::length() {
     return wordLength;
 }
