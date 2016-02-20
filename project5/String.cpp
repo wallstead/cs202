@@ -4,5 +4,5 @@
 using namespace std;
 
 void String::initialize(char *str) {
-    cout << "Hey from String.h" << endl;
+    cout << "The string: " << str << endl;
 }

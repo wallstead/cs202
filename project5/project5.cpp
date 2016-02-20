@@ -5,7 +5,19 @@
 using namespace std;
 
 int main() {
-    cout << "Hello" << endl;
+    char *word = new char[20];
+
+    cout << "Enter a string: ";
+    cin >> word;
+
     String test;
-    test.initialize("Hi");
+    test.initialize(word);
+
+    ifstream fin;
+    fin.open("strings");
+    if (fin.good()) {
+        cout << "Opened file." << endl;
+    } else {
+        cout << "Could not open file." << endl;
+    }
 }

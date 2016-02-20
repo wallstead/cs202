@@ -10,4 +10,4 @@ String.o: String.cpp
 	g++ -c String.cpp
 
 clean:
-	rm *.o p5
+	rm -f *.o p5
