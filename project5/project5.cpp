@@ -12,7 +12,9 @@ int main() {
 
     String test;
     test.initialize(word);
-
+    cout << "word length: " << test.length() << endl;
+    test.print();
+    
     ifstream fin;
     fin.open("strings");
     if (fin.good()) {
