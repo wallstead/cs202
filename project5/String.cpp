@@ -66,11 +66,13 @@ void String::concat(const String &str) {
 
 int String::compare(const String &str) {
     char *strPtr = str.buffer;
+    char *bufferHome = buffer;
 
     while (*strPtr == *buffer && *strPtr && *buffer) {
         strPtr++;
         buffer++;
     }
+    buffer = bufferHome;
 
     if (*strPtr > *buffer) {
         return -1;
