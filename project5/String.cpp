@@ -38,6 +38,32 @@ void String::copy(const String &str) {
     initialize(strPtr);
 }
 
+void String::concat(const String &str) {
+    int newLength = str.wordLength + wordLength;
+    char *tempStr = new char[newLength+1];
+    char *tempStrHome = tempStr;
+    char *strPtr = str.buffer;
+    char *bufferHome = buffer;
+
+    while (*buffer != '\0') {
+        *tempStr = *buffer;
+        buffer++;
+        tempStr++;
+    }
+    while (*strPtr != '\0') {
+        *tempStr = *strPtr;
+        tempStr++;
+        strPtr++;
+    }
+    
+    *tempStr = '\0';
+    tempStr = tempStrHome;
+    buffer = bufferHome;
+
+    deallocate();
+    initialize(tempStr);
+}
+
 int String::length() {
     return wordLength;
 }

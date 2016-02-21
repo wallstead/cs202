@@ -23,10 +23,8 @@ int main() {
     test2.initialize(word2);
 
 
-    test.copy(test2);
-
+    test.concat(test2);
     test.print();
-    cout << test.length();
 
     // ifstream fin;
     // fin.open("strings");
