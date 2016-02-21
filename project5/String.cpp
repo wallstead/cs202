@@ -55,13 +55,30 @@ void String::concat(const String &str) {
         tempStr++;
         strPtr++;
     }
-    
+
     *tempStr = '\0';
     tempStr = tempStrHome;
     buffer = bufferHome;
 
     deallocate();
     initialize(tempStr);
+}
+
+int String::compare(const String &str) {
+    char *strPtr = str.buffer;
+
+    while (*strPtr == *buffer && *strPtr && *buffer) {
+        strPtr++;
+        buffer++;
+    }
+
+    if (*strPtr > *buffer) {
+        return -1;
+    } else if (*buffer > *strPtr) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 int String::length() {
