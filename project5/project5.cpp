@@ -25,6 +25,9 @@ int main() {
 
     test.copy(test2);
 
+    test.print();
+    cout << test.length();
+
     // ifstream fin;
     // fin.open("strings");
     // if (fin.good()) {

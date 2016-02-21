@@ -33,11 +33,9 @@ void String::deallocate() {
 }
 
 void String::copy(const String &str) {
-    if (str.wordLength > wordLength) {
-        cout << "Too big" << endl;
-    } else {
-        cout << "Big enough" << endl;
-    }
+    deallocate();
+    char *strPtr = str.buffer;
+    initialize(strPtr);
 }
 
 int String::length() {
