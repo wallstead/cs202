@@ -23,7 +23,7 @@ int main() {
 
     iFileName = iFileNameHome;
 
-    /* Create String */
+    /* Create correctly-sized char* */
     char *iFileNamev2 = new char[length+1];
     char *iFileNamev2Home = iFileNamev2;
     while (*iFileName != '\0') {
@@ -199,4 +199,6 @@ int main() {
     }
 
     fin.close();
+
+    return 0;
 }
