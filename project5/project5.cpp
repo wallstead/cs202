@@ -5,6 +5,7 @@
 using namespace std;
 
 int main() {
+    /* Get input file name from user */
     ifstream fin;
     char *iFileName = new char[20];
 
@@ -74,21 +75,21 @@ int main() {
 
         /* Array Test Driver */
         String *strings = new String[10];
-        String *stringPtr = strings;
+        String *stringPtr = strings; // Used to jump through array
 
         for (int i = 0; i < 10; i++) {
             char *temp = new char[20];
-            fin >> temp;
-            (*stringPtr).initialize(temp);
-            delete [] temp;
+            fin >> temp; // Get each string as a char* initialy
+            (*stringPtr).initialize(temp); // Then convert
+            delete [] temp; // Then delete the char*
             temp = NULL;
             stringPtr++;
         }
-        stringPtr = strings;
+        stringPtr = strings; // reset pointer to base
 
         cout << "Buffers of strings in array:" << endl;
         for (int i = 0; i < 10; i++) {
-            cout << "\tstring " << i+1 << ": ";
+            cout << "\tstring " << i+1 << ": "; // some styling
             (*stringPtr).print();
             stringPtr++;
         }
@@ -102,7 +103,7 @@ int main() {
         stringPtr = strings;
 
         cout << "Comparing string 7 to string 6: " << endl;
-        stringPtr += 5;
+        stringPtr += 5; // set to string 6
         String *str6 = stringPtr;
         stringPtr++;
         String *str7 = stringPtr;
@@ -129,7 +130,7 @@ int main() {
         stringPtr = strings;
 
         cout << "Concatenating string 3 to string 7: " << endl;
-        (*str7).concat(*str3);
+        (*str7).concat(*str3); // These pointers are already defined above
         cout << "\tstring 3: ";
         (*str3).print();
         cout << "\tstring 7: ";
@@ -157,7 +158,7 @@ int main() {
 
         cout << "Deallocating memory for each string in array." << endl;
         for (int i = 0; i < 10; i++) {
-            (*stringPtr).deallocate();
+            (*stringPtr).deallocate(); // deallocate the memory for each string
             stringPtr++;
         }
         stringPtr = strings;
