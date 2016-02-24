@@ -6,7 +6,15 @@ using namespace std;
 
 int main() {
     ifstream fin;
+    char *iFileName = new char[20];
+
+    cout << "Please enter file name: ";
+    cin >> iFileName;
+
     fin.open("strings");
+
+    delete [] iFileName;
+    iFileName = NULL;
 
     if (fin.is_open()) {
         /* Single Instances Test Driver */
@@ -77,7 +85,7 @@ int main() {
             stringPtr++;
         }
         stringPtr = strings;
-        
+
         cout << "Buffers of strings in array:" << endl;
         for (int i = 0; i < 10; i++) {
             cout << "\tstring " << i+1 << ": ";
@@ -161,4 +169,6 @@ int main() {
     } else {
         cout << "Could not open file." << endl;
     }
+
+    fin.close();
 }
