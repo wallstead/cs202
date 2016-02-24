@@ -1,0 +1,9 @@
+Student Name: Willis Allstead
+Program Name: Strings Class
+Program Purpose: To learn Classes
+
+This project #imports the <iostream> and <fstream> libraries along with a
+"String.h" specification file.
+
+
+Changes I would make:

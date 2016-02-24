@@ -12,10 +12,37 @@ int main() {
     cout << "Please enter file name: ";
     cin >> iFileName;
 
-    fin.open("strings");
+
+    char *iFileNameHome = iFileName;
+    /* Get Length */
+    int length = 0;
+    while (*iFileName != '\0') {
+        length++;
+        iFileName++;
+    }
+
+    iFileName = iFileNameHome;
+
+    /* Create String */
+    char *iFileNamev2 = new char[length+1];
+    char *iFileNamev2Home = iFileNamev2;
+    while (*iFileName != '\0') {
+        *iFileNamev2 = *iFileName;
+        iFileNamev2++;
+        iFileName++;
+    }
+    iFileName = iFileNameHome;
+    *iFileNamev2 = '\0';
+    iFileNamev2 = iFileNamev2Home;
 
     delete [] iFileName;
     iFileName = NULL;
+
+
+    fin.open(iFileNamev2);
+
+    delete [] iFileNamev2;
+    iFileNamev2 = NULL;
 
     if (fin.is_open()) {
         /* Single Instances Test Driver */
@@ -168,7 +195,7 @@ int main() {
         strings = NULL;
 
     } else {
-        cout << "Could not open file." << endl;
+        cout << "Could not open file: " << iFileNamev2 << endl;
     }
 
     fin.close();
