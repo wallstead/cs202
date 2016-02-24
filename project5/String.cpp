@@ -24,11 +24,12 @@ void String::initialize(char *str) {
         str++;
     }
     *buffer = '\0';
+    str = strHome;
     buffer = bufferHome;
 }
 
 void String::deallocate() {
-    delete []buffer;
+    delete [] buffer;
     buffer = NULL;
 }
 
@@ -43,6 +44,7 @@ void String::concat(const String &str) {
     char *tempStr = new char[newLength+1];
     char *tempStrHome = tempStr;
     char *strPtr = str.buffer;
+    char *strPtrHome = strPtr;
     char *bufferHome = buffer;
 
     while (*buffer != '\0') {
@@ -56,12 +58,16 @@ void String::concat(const String &str) {
         strPtr++;
     }
 
+    strPtr = strPtrHome;
     *tempStr = '\0';
     tempStr = tempStrHome;
     buffer = bufferHome;
 
     deallocate();
     initialize(tempStr);
+
+    delete [] tempStr;
+    tempStr = NULL;
 }
 
 int String::compare(const String &str) {

@@ -18,9 +18,9 @@ int main() {
 
         single1.initialize(temp1);
         single2.initialize(temp2);
-        delete []temp1;
+        delete [] temp1;
         temp1 = NULL;
-        delete []temp2;
+        delete [] temp2;
         temp2 = NULL;
 
         cout << "Buffer of both strings: " << endl;
@@ -65,19 +65,19 @@ int main() {
         single2.deallocate();
 
         /* Array Test Driver */
-        String strings[10];
+        String *strings = new String[10];
         String *stringPtr = strings;
 
         for (int i = 0; i < 10; i++) {
             char *temp = new char[20];
             fin >> temp;
             (*stringPtr).initialize(temp);
-            delete []temp;
+            delete [] temp;
             temp = NULL;
             stringPtr++;
         }
         stringPtr = strings;
-
+        
         cout << "Buffers of strings in array:" << endl;
         for (int i = 0; i < 10; i++) {
             cout << "\tstring " << i+1 << ": ";
@@ -99,8 +99,6 @@ int main() {
         stringPtr++;
         String *str7 = stringPtr;
         cout << "\t" << (*str6).compare(*str7) << endl;
-        (*str6).print();
-        (*str7).print();
         stringPtr = strings;
 
         cout << "Comparing string 1 to string 3: " << endl;
@@ -108,8 +106,6 @@ int main() {
         stringPtr+=2;
         String *str3 = stringPtr;
         cout << "\t" << (*str3).compare(*str1) << endl;
-        (*str1).print();
-        (*str3).print();
         stringPtr = strings;
 
         cout << "Concatenating string 10 to string 9: " << endl;
@@ -151,6 +147,16 @@ int main() {
         }
         stringPtr = strings;
 
+        cout << "Deallocating memory for each string in array." << endl;
+        for (int i = 0; i < 10; i++) {
+            (*stringPtr).deallocate();
+            stringPtr++;
+        }
+        stringPtr = strings;
+
+        cout << "Deallocating memory for array." << endl;
+        delete [] strings;
+        strings = NULL;
 
     } else {
         cout << "Could not open file." << endl;
