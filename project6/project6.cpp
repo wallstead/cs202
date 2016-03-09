@@ -11,30 +11,6 @@ void searchByMake(Agency *agency);
 int main() {
 
     Agency agency = Agency();
-    //
-    // cout << endl << "Print all cars: " << endl;
-    // agency.print();
-    // cout << endl << "Print all available cars: " << endl;
-    // agency.printAvailableCars();
-    // cout << endl << "Print most expensive car: " << endl;
-    // agency.findMostExpensive();
-    // cout << endl << "Estimated cost of car 15 for 10 days: " << endl;
-    // cout << agency.estimateCost(15, 10) << endl;
-    // cout << endl << "Sorting by make" << endl;
-    // agency.sortByMake();
-    // cout << endl << "Print all cars: " << endl;
-    // agency.print();
-    // cout << endl << "Sorting by price" << endl;
-    // agency.sortByPrice();
-    // cout << endl << "Print all cars: " << endl;
-    // agency.print();
-    //
-    // cout << endl << "Search by make: (Toyota)" << endl;
-    // agency.searchByMake("Toyota");
-    //
-    //
-
-
 
     int selection = 0;
     do {

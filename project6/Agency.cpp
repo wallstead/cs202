@@ -22,8 +22,15 @@ Car::Car() {
     available = false;
 }
 
-Car::Car(char *make, char *model, int year, float price, bool available) {
+Car::Car(char *tempMake, char *tempModel, int tempYear, float tempPrice, bool tempAvailable) {
     // cout << "CREATING AGENCY WITH PARAMETERS" << endl;
+    make = new char[20];
+    copy_string(make, tempMake);
+    model = new char[20];
+    copy_string(model, tempModel);
+    year = tempYear;
+    price = tempPrice;
+    available = tempAvailable;
 }
 
 Car::Car(const Car &car) {
@@ -188,11 +195,8 @@ void Agency::readInData(char *ifileName) {
             float tempPrice;
             bool tempAvailable = false;
 
-            fin >> tempYear;
-            fin >> tempMake;
-            fin >> tempModel;
-            fin >> tempPrice;
-            fin >> tempAvailable;
+            fin >> tempYear >> tempMake >> tempModel >> tempPrice
+                >> tempAvailable;
 
             carPtr->setYear(tempYear);
             carPtr->setMake(tempMake);
