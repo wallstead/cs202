@@ -13,7 +13,7 @@ class Stack {
                 bool empty() const;
                 bool full() const;
                 bool clear();
-		bool operator==(const Stack&) const;
+        		bool operator==(const Stack&) const;
                 friend ostream& operator<<(ostream&, const Stack&);
         private:
                 int max;
@@ -21,4 +21,3 @@ class Stack {
                 int actual; //only used in stack (stay) implementation
                 char* data;
 };
-

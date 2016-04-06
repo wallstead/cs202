@@ -1,4 +1,4 @@
-// array - stay
+// array - stay - done
 
 #include "stack.h"
 #include <iostream> // remove after testing
@@ -33,7 +33,6 @@ bool Stack::push(char letter) {
     if (full() == false) {
         top = 0;
         actual++;
-        cout << "actual: " << actual << " max: " << max << endl;
 
         // move every other object right one
         for (int i = actual-1; i > 0; i--) {
@@ -85,6 +84,15 @@ bool Stack::clear() {
     } else { // nothing to clear
         return false;
     }
+}
+
+ostream& operator<<(ostream &fout, const Stack &stackToPrint) {
+    fout << "[ ";
+    for (int i = stackToPrint.top; i < stackToPrint.actual; i++) {
+        fout << stackToPrint.data[i] << " ";
+    }
+    fout << "]";
+    return fout;
 }
 
 bool Stack::operator==(const Stack &toCompare) const {

@@ -75,3 +75,13 @@ bool Stack::operator==(const Stack &toCompare) const {
         return false;
     }
 }
+
+ostream& operator<<(ostream &fout, const Stack &stackToPrint) {
+    fout << "[ ";
+    for (int i = 0; i <= stackToPrint.top; i++) {
+        fout << stackToPrint.data[i] << " ";
+    }
+
+    fout << "]";
+    return fout;
+}
