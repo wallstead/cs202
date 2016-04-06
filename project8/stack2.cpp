@@ -1,7 +1,6 @@
-// array - move
+// array - move - done
 
 #include "stack.h"
-#include <iostream> // remove after testing
 
 Stack::Stack(int size) {
     max = size;
