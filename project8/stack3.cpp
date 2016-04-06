@@ -1,1 +1,3 @@
+// node
+
 #include "stackN.h"
