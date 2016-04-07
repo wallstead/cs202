@@ -1,74 +1,71 @@
 #include <iostream>
-#include "stack.h"
-// #include "stackN.h"
+// #include "stack.h"
+#include "stackN.h"
 
 using namespace std;
 
 int main() {
 
-    Stack test = Stack(3);
     char a = 'a';
     char b = 'b';
     char c = 'c';
-    char d = 'd';
-    char e = 'e';
+    char z = 'z';
+
+    Stack test;
+
+    // cout << test << endl;
+
+    test.push(a);
 
     cout << test << endl;
 
-    if (test.push(a)) {
-        cout << "pushed in: " << a << endl;
-    } else {
-        cout << "failed to push in: " << a << endl;
+    test.push(b);
+
+    cout << test << endl;
+
+    test.push(c);
+
+    cout << test << endl;
+
+    test.push(a);
+
+    cout << test << endl;
+
+    char popped;
+
+    if (test.pop(popped)) {
+        cout << "popped out: " << popped << endl;
     }
 
     cout << test << endl;
 
-    char ctest;
-
-    if (test.pop(ctest)) {
-        cout << "popped out: " << ctest << endl;
-    } else {
-        cout << "failed to pop out" << endl;
-    }
+    test.clear();
 
     cout << test << endl;
 
-    if (test.push(b)) {
-        cout << "pushed in: " << b << endl;
-    } else {
-        cout << "failed to push in: " << b << endl;
-    }
+    test.push(a);
 
     cout << test << endl;
 
-    if (test.push(c)) {
-        cout << "pushed in: " << c << endl;
-    } else {
-        cout << "failed to push in: " << c << endl;
-    }
+    test.push(b);
 
     cout << test << endl;
 
-    if (test.push(d)) {
-        cout << "pushed in: " << d << endl;
-    } else {
-        cout << "failed to push in: " << d << endl;
-    }
+    test.push(b);
 
     cout << test << endl;
 
-    if (test.push(a)) {
-        cout << "pushed in: " << a << endl;
-    } else {
-        cout << "failed to push in: " << a << endl;
-    }
+    test.push(c);
 
     cout << test << endl;
 
+    Stack test3 = test;
 
+    cout << test3 << endl;
 
+    test3.push(z);
 
-
+    cout << test3 << endl;
 
 
 
