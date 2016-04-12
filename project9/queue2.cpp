@@ -1,4 +1,4 @@
-// Queue - stay
+// Queue - wrap
 #include <fstream>
 #include "queue.h"
 
@@ -15,7 +15,7 @@ Queue::Queue(const Queue &toCopy) {
     this->front = toCopy.front;
     this->rear = toCopy.rear;
 
-    for (int i = 0; i <= toCopy.rear; i++) {
+    for (int i = 0; i < toCopy.max; i++) {
         this->data[i] = toCopy.data[i];
     }
 }
@@ -34,7 +34,7 @@ Queue& Queue::operator=(const Queue &toCopy) {
         this->front = toCopy.front;
         this->rear = toCopy.rear;
 
-        for (int i = 0; i <= toCopy.rear; i++) {
+        for (int i = 0; i < toCopy.max; i++) {
             this->data[i] = toCopy.data[i];
         }
     } else {
@@ -46,8 +46,11 @@ Queue& Queue::operator=(const Queue &toCopy) {
 
 bool Queue::enqueue(int toAdd) {
     if (!full()) {
-        front = 0;
-        data[++rear] = toAdd;
+        if (front < 0) {
+            front = 0;
+        }
+        int placeToAdd = ++rear % max;
+        data[placeToAdd] = toAdd;
         return true;
     } else {
         return false;
@@ -56,11 +59,12 @@ bool Queue::enqueue(int toAdd) {
 
 bool Queue::dequeue(int &removed) {
     if (!empty()) {
-        removed = data[front];
-        for (int i = front; i < rear; i++) {
-            data[i] = data[i+1];
+        removed = data[front % max];
+        if (rear==front) {
+            clear();
+        } else {
+            ++front;
         }
-        rear--;
 
         return true;
     } else {
@@ -69,11 +73,11 @@ bool Queue::dequeue(int &removed) {
 }
 
 bool Queue::empty() const {
-    return rear < 0;
+    return front < 0 && rear << 0;
 }
 
 bool Queue::full() const {
-    return rear == max-1;
+    return (rear+1 - max) == front;
 }
 
 bool Queue::clear() {
@@ -86,9 +90,10 @@ bool Queue::clear() {
 }
 
 bool Queue::operator==(const Queue &toCompare) const {
-    if (this->rear == toCompare.rear) {
-        for (int i = toCompare.front; i < toCompare.rear; i++) {
-            if (this->data[i] != toCompare.data[i]) {
+    if (this->max == toCompare.max) {
+        for (int i = toCompare.front; i <= toCompare.rear; i++) { // count of items
+            int positionToCompare = i % toCompare.max;
+            if (this->data[positionToCompare] != toCompare.data[positionToCompare]) {
                 return false;
             }
         }
@@ -98,13 +103,16 @@ bool Queue::operator==(const Queue &toCompare) const {
 
 ostream& operator<<(ostream &fin, const Queue &toPrint) {
     if (!toPrint.empty()) {
-        for (int i = toPrint.front; i <= toPrint.rear; i++) {
-            if (i == toPrint.front) {
-                fin << "[" << toPrint.data[i] << "] ";
-            } else if (i == toPrint.rear) {
-                fin << "|" << toPrint.data[i] << "|";
+        for (int i = toPrint.front; i <= toPrint.rear; i++) { // count of items
+            int positionToRead = i % toPrint.max;
+
+            // cout << "front: " << toPrint.front << " rear: " << toPrint.rear << endl;
+            if (positionToRead == (toPrint.front % toPrint.max)) {
+                fin << "[" << toPrint.data[positionToRead] << "] ";
+            } else if (positionToRead == (toPrint.rear % toPrint.max)) {
+                fin << "|" << toPrint.data[positionToRead] << "|";
             } else {
-                fin << toPrint.data[i] << " ";
+                fin << toPrint.data[positionToRead] << " ";
             }
         }
     }
