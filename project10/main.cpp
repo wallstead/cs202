@@ -13,27 +13,12 @@ int main() {
     cout << list << endl;
     list.insertAfter(3);
     cout << list << endl;
-    list.goToNext();
+    list.clear();
     cout << list << endl;
-    list.goToNext();
+    list.insertAfter(3);
     cout << list << endl;
-    list.goToPrior();
+    list.insertBefore(2);
     cout << list << endl;
-    list.goToPrior();
-    cout << list << endl;
-    list.goToPrior();
-    cout << list << endl;
-    list.goToNext();
-    cout << list << endl;
-    list.remove(removed);
-    cout << list << endl;
-    list.goToNext();
-    cout << list << endl;
-    list.goToNext();
-    cout << list << endl;
-
-
-
 
 
 

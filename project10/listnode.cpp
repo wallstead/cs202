@@ -10,11 +10,29 @@ ListNode::ListNode(int ignore) {
 }
 
 ListNode::ListNode(const ListNode &toCopy) {
+    if (toCopy.isEmpty()) {
+        head = cursor = NULL;
+    } else {
+        head = cursor = new Node(toCopy.head->data, NULL); // create the first Node
+        Node *stmp = toCopy.head; // source traverser
+        Node *dtmp = head; // destination traverser
 
+        while(stmp != NULL) {
+            if (stmp->next != NULL) {
+                Node *newDNode = new Node(stmp->next->data, NULL); // Create new node with stmp's data
+                dtmp->next = newDNode; // Point (node at dtmp)'s next to it
+                dtmp = newDNode; // Set dtmp to the the new node;
+            }
+            if (stmp == toCopy.cursor) {
+                cursor = dtmp;
+            }
+            stmp = stmp->next; // go to next source node
+        }
+    }
 }
 
 ListNode::~ListNode() {
-
+    clear();
 }
 
 bool ListNode::insertAfter(int data) {
@@ -71,11 +89,49 @@ bool ListNode::get(int &current) const {
 
 bool ListNode::remove(int &removed) {
     if (!isEmpty()) {
-        // add case for the first node
-        Node *tmp = cursor; // leave tmp node pointer at cursor
-        goToPrior();
-        cursor->next = tmp->next; // link cursor to next one
-        tmp = NULL;
+        removed = cursor->data;
+        if (cursor == head) { // at first node
+            cursor = head = head->next;
+        } else {
+            Node *tmp = cursor; // leave tmp node pointer at cursor
+            goToPrior();
+            cursor->next = tmp->next; // link cursor to next one
+            tmp = NULL;
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void ListNode::clear() {
+    if (!isEmpty()) {
+        Node *del = head; // start deletion node at head
+
+        while (head != NULL) {
+            del = del->next;
+            delete head;
+            head = del;
+        }
+
+        head = cursor = NULL;
+    }
+}
+
+bool ListNode::goToBeginning() {
+    if (!isEmpty()) {
+        cursor = head;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool ListNode::goToEnd() {
+    if (!isEmpty()) {
+        while(cursor->next != NULL) {
+            cursor = cursor->next;
+        }
         return true;
     } else {
         return false;
@@ -121,7 +177,30 @@ bool ListNode::isFull() const {
     return false;
 }
 
+ListNode& ListNode::operator=(const ListNode &toCopy) {
+    this->clear();
+    if (toCopy.isEmpty()) {
+        this->head = this->cursor = NULL;
+    } else {
+        this->head = this->cursor = new Node(toCopy.head->data, NULL); // create the first Node
+        Node *stmp = toCopy.head; // source traverser
+        Node *dtmp = this->head; // destination traverser
 
+        while(stmp != NULL) {
+            if (stmp->next != NULL) {
+                Node *newDNode = new Node(stmp->next->data, NULL); // Create new node with stmp's data
+                dtmp->next = newDNode; // Point (node at dtmp)'s next to it
+                dtmp = newDNode; // Set dtmp to the the new node;
+            }
+            if (stmp == toCopy.cursor) {
+                this->cursor = dtmp;
+            }
+            stmp = stmp->next; // go to next source node
+        }
+    }
+
+    return *this;
+}
 
 ostream& operator << (ostream &fin, const ListNode &toPrint) {
     Node *traverser = toPrint.head;
